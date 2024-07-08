@@ -1,0 +1,22 @@
+{
+    "name": "hotel-booking-chatbot",
+    "version": "1.0.0",
+    "description": "A chatbot for hotel bookings using Gemini API",
+    "main": "backend/server.js",
+    "scripts": {
+        "start": "node backend/server.js",
+        "dev": "nodemon backend/server.js"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.14.1",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "nodemailer": "^6.9.14",
+        "sequelize": "^6.6.5",
+        "sqlite3": "^5.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    }
+}
