@@ -16,7 +16,8 @@ async function sendMessage() {
         userInput.value = '';
 
         try {
-            const response = await fetch('/chat', {
+            // Update this URL to match your backend server address and port
+            const response = await fetch('http://localhost:3456/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,3 +50,6 @@ userInput.addEventListener('keypress', (e) => {
 
 // Initial bot message
 addMessage('Welcome to our hotel booking service! How can I assist you today?');
+
+// Add this for debugging
+console.log('script.js loaded and running');
