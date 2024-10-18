@@ -12,6 +12,12 @@ if (!process.env.GEMINI_API_KEY) {
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const fetch = require('node-fetch');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { Conversation } = require('./database');
+
+// Rest of your code...
+
 async function fetchRoomOptions() {
   const response = await fetch('https://bot9assignement.deno.dev/rooms');
   return await response.json();
@@ -20,11 +26,15 @@ async function fetchRoomOptions() {
 async function bookRoom(roomId, fullName, email, nights) {
   const response = await fetch('https://bot9assignement.deno.dev/book', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ roomId, fullName, email, nights }),
   });
   return await response.json();
 }
+
+// Rest of your code...
 
 async function getChatResponse(message) {
   await Conversation.create({ role: 'user', message });
