@@ -3,8 +3,7 @@ const userInput = document.getElementById('user-input');
 
 function addMessage(content, isUser = false) {
     const messageElement = document.createElement('div');
-    messageElement.classList.add('message');
-    messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+    messageElement.classList.add('message', isUser ? 'user-message' : 'bot-message');
     messageElement.textContent = content;
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -26,16 +25,18 @@ async function sendMessage() {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to get response from the server');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-            const botMessage = data.message;
+            if (!data.message) {
+                throw new Error('Unexpected response format');
+            }
 
-            addMessage(botMessage);
+            addMessage(data.message);
         } catch (error) {
-            console.error('Error:', error);
-            addMessage('Sorry, there was an error processing your request.');
+            console.error('Error:', error.message);
+            addMessage('Sorry, there was an error processing your request. Please try again.');
         }
     }
 }
