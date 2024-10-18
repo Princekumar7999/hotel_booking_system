@@ -1,22 +1,12 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { Conversation } = require('./database');
-const fetch = require('node-fetch');
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Conversation } from './database.js';
+import fetch from 'node-fetch';
 
-console.log('Chatbot GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
+let genAI = null;
 
-// Ensure the API key is properly loaded from environment variables
-if (!process.env.GEMINI_API_KEY) {
-  console.error('GEMINI_API_KEY is not set in the environment variables');
-  process.exit(1);
+export function initializeGenerativeAI(key) {
+  genAI = new GoogleGenerativeAI(key);
 }
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const fetch = require('node-fetch');
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const { Conversation } = require('./database');
-
-// Rest of your code...
 
 async function fetchRoomOptions() {
   const response = await fetch('https://bot9assignement.deno.dev/rooms');
@@ -33,8 +23,6 @@ async function bookRoom(roomId, fullName, email, nights) {
   });
   return await response.json();
 }
-
-// Rest of your code...
 
 async function getChatResponse(message) {
   await Conversation.create({ role: 'user', message });
@@ -63,9 +51,6 @@ async function getChatResponse(message) {
     const response = await result.response;
     const botMessage = response.text();
 
-    // Rest of the function remains the same...
-    // (Handle room options, booking, etc.)
-
     await Conversation.create({ role: 'assistant', message: botMessage });
     return botMessage;
   } catch (error) {
@@ -74,4 +59,4 @@ async function getChatResponse(message) {
   }
 }
 
-module.exports = { getChatResponse };
+export { getChatResponse };

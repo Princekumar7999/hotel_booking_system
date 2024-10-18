@@ -3,16 +3,17 @@
     "version": "1.0.0",
     "description": "A chatbot for hotel bookings using Gemini API",
     "main": "backend/server.js",
+    "type": "module",
     "scripts": {
         "start": "node backend/server.js",
         "dev": "nodemon backend/server.js"
     },
     "dependencies": {
         "@google/generative-ai": "^0.14.1",
-        "node-fetch": "^3.3.0",
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
+        "node-fetch": "^3.3.0",
         "nodemailer": "^6.9.14",
         "sequelize": "^6.6.5",
         "sqlite3": "^5.0.2"

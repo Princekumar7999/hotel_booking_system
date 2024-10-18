@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+import { Sequelize, DataTypes } from 'sequelize';
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -17,4 +17,4 @@ const Conversation = sequelize.define('Conversation', {
     }
 });
 
-module.exports = { sequelize, Conversation };
+export { sequelize, Conversation };

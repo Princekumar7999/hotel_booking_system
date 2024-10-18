@@ -1,23 +1,31 @@
-require('dotenv').config({ path: __dirname + '/.env' });
-const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-const cors = require('cors');
-const { getChatResponse } = require('./chatbot');
-const { sequelize } = require('./database');
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import cors from 'cors';
+
+import { fileURLToPath } from 'url';
+import { initializeGenerativeAI, getChatResponse } from './chatbot.js';
+import { sequelize } from './database.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3456;
+
+// Logging
+console.log('PORT:', PORT);
+console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
+
+initializeGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../frontend')));
-
-// Logging
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('PORT:', PORT);
-console.log('GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
 
 // Routes
 app.get('/api/test', (req, res) => {
@@ -48,3 +56,5 @@ sequelize.sync().then(() => {
 }).catch(error => {
   console.error('Unable to sync database:', error);
 });
+
+// */
